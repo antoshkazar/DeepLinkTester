@@ -47,7 +47,7 @@ class MainActivity : ComponentActivity() {
 }
 
 private const val WOB_SCHEMA = "writeoff_breakage://auth"
-private const val INV_SCHEMA = "inventory://callback"
+private const val INV_SCHEMA = "inventory://auth"
 
 enum class TARGET(projectName: String) {
     INV("Инвентаризация"),
