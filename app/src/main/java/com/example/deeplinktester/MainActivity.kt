@@ -36,8 +36,10 @@ class MainActivity : ComponentActivity() {
         val targetSchema = when (target) {
             TARGET.INV -> INV_SCHEMA
             TARGET.WOB -> WOB_SCHEMA
+            TARGET.WKL -> WKL_SCHEMA
         }
-        val uri = "${targetSchema}?personnel=$personnelNumber&market=$market&taskNumber=$taskNumber"
+        val full = "будет передаваться"
+        val uri = "${targetSchema}?personnel=$personnelNumber&market=$market&taskNumber=$taskNumber&fullName=$full"
         val deepLink = Uri.parse(uri)
         val intent = Intent(Intent.ACTION_VIEW, deepLink).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -48,9 +50,11 @@ class MainActivity : ComponentActivity() {
 
 private const val WOB_SCHEMA = "writeoff_breakage://auth"
 private const val INV_SCHEMA = "inventory://auth"
+private const val WKL_SCHEMA = "work_list://auth"
 
 enum class TARGET(projectName: String) {
     INV("Инвентаризация"),
+    WKL("Рабочий список"),
     WOB("Списание");
 }
 
@@ -62,7 +66,7 @@ fun AppContent(onNavigate: (String, String, String, TARGET) -> Unit) {
     var taskNumber by remember { mutableStateOf("") }
     var selectedAction by remember { mutableStateOf(TARGET.WOB) }
 
-    val actions = listOf(TARGET.INV, TARGET.WOB)
+    val actions = listOf(TARGET.INV, TARGET.WOB, TARGET.WKL)
 
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         Column(
